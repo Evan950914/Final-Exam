@@ -1,90 +1,34 @@
-# 期末刷題網站
+# 第 7 章期末刷題網站
 
 這是一個純前端刷題網站，可部署到 GitHub Pages。
 
+## 檔案
+
+- `index.html`：網頁入口
+- `style.css`：手機版樣式
+- `script.js`：刷題邏輯
+- `questions.js`：題庫
+- `images/`：題目圖片
+
 ## 功能
 
-- 手機版介面
 - 全部題目練習
 - 隨機練習
 - 錯題本
-- 答題統計
-- Mermaid 圖形題支援
-
-## 檔案說明
-
-```txt
-quiz-site/
-├─ index.html
-├─ style.css
-├─ script.js
-├─ questions.js
-└─ README.md
-```
-
-## 本機測試
-
-直接打開 `index.html` 通常可以使用。
-
-如果瀏覽器阻擋部分功能，可以用 VS Code 的 Live Server 開啟。
+- 顯示答案串
+- 手機可用
+- 不依賴後端、不需要資料庫
 
 ## 部署到 GitHub Pages
 
-1. 建立一個新的 GitHub Repository
-2. 把這些檔案上傳到 Repository 根目錄
-3. 進入 Repository 的 Settings
-4. 左側找到 Pages
-5. Branch 選 `main`
-6. Folder 選 `/root`
-7. 儲存
-8. 等待 GitHub Pages 產生網址
+1. 把這個資料夾裡的所有檔案上傳到 GitHub Repo 根目錄。
+2. 到 `Settings` → `Pages`。
+3. Source 選 `Deploy from a branch`。
+4. Branch 選 `main`，Folder 選 `/root`。
+5. 等 1 到 3 分鐘。
 
-## 新增題目
+網站網址通常會是：
 
-打開 `questions.js`，照格式新增：
-
-```js
-{
-  id: 15,
-  question: "題目文字",
-  options: {
-    A: "選項 A",
-    B: "選項 B",
-    C: "選項 C",
-    D: "選項 D"
-  },
-  answer: "A",
-  explanation: "解析文字"
-}
-```
-
-## 圖形題
-
-可加入 Mermaid 圖：
-
-```js
-{
-  id: 16,
-  question: "參考下圖回答問題",
-  diagram: `
-graph LR
-  A --> B
-`,
-  options: {
-    A: "選項 A",
-    B: "選項 B",
-    C: "選項 C",
-    D: "選項 D"
-  },
-  answer: "A",
-  explanation: "解析文字"
-}
-```
-
-## 圖片題
-
-若要用圖片，建立 `images/` 資料夾，然後題目加：
-
-```js
-image: "images/q001.png"
+```txt
+https://你的帳號.github.io/你的Repo名稱/
 ```
