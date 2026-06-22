@@ -1,4 +1,4 @@
-const STORAGE_KEY = "final_exam_quiz_wrong_ids_v2";
+const STORAGE_KEY = "final_exam_quiz_wrong_ids_v3";
 
 const homePage = document.getElementById("homePage");
 const quizPage = document.getElementById("quizPage");
@@ -123,14 +123,23 @@ function startQuiz(mode) {
 }
 
 function renderImage(image) {
+  imageBox.innerHTML = "";
+
   if (!image) {
     imageBox.classList.add("hidden");
-    questionImage.removeAttribute("src");
     return;
   }
 
   imageBox.classList.remove("hidden");
-  questionImage.src = image;
+  const images = Array.isArray(image) ? image : [image];
+
+  images.forEach((src) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "題目圖";
+    img.loading = "lazy";
+    imageBox.appendChild(img);
+  });
 }
 
 function renderQuestion() {
@@ -143,7 +152,8 @@ function renderQuestion() {
   scoreText.textContent = `答對 ${correctCount} 題`;
   progressFill.style.width = `${progress}%`;
 
-  questionText.textContent = `${q.id}. ${q.question}`;
+  const displayNo = q.source ? `${q.source} 第 ${q.originalNo} 題` : `第 ${q.id} 題`;
+  questionText.textContent = `${displayNo}｜${q.question}`;
   optionsBox.innerHTML = "";
 
   renderImage(q.image);

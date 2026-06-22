@@ -320,3 +320,8 @@ button.small {
     padding: 6px;
   }
 }
+
+.answer-box strong {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
