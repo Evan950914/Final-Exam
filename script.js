@@ -1,4 +1,6 @@
-const STORAGE_KEY = "final_exam_quiz_wrong_ids_v3";
+const APP_VERSION = "dark-189-fix-20260623";
+const STORAGE_KEY = "final_exam_quiz_wrong_ids_v4";
+const questionBank = Array.isArray(questions) ? questions : [];
 
 const homePage = document.getElementById("homePage");
 const quizPage = document.getElementById("quizPage");
@@ -8,6 +10,8 @@ const totalCount = document.getElementById("totalCount");
 const wrongCount = document.getElementById("wrongCount");
 const answerStringText = document.getElementById("answerStringText");
 const answerBox = document.getElementById("answerBox");
+const bankInfo = document.getElementById("bankInfo");
+const versionText = document.getElementById("versionText");
 
 const startAllBtn = document.getElementById("startAllBtn");
 const startRandomBtn = document.getElementById("startRandomBtn");
@@ -23,7 +27,6 @@ const progressFill = document.getElementById("progressFill");
 
 const questionText = document.getElementById("questionText");
 const imageBox = document.getElementById("imageBox");
-const questionImage = document.getElementById("questionImage");
 const optionsBox = document.getElementById("optionsBox");
 
 const feedbackBox = document.getElementById("feedbackBox");
@@ -48,26 +51,26 @@ let currentMode = "all";
 function getWrongIds() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const ids = raw ? JSON.parse(raw) : [];
+    return Array.isArray(ids) ? ids : [];
   } catch {
     return [];
   }
 }
 
 function setWrongIds(ids) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...new Set(ids)]));
+  const validIds = new Set(questionBank.map((q) => q.id));
+  const cleaned = [...new Set(ids)].filter((id) => validIds.has(id));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned));
   updateHomeStats();
 }
 
 function addWrongId(id) {
-  const ids = getWrongIds();
-  ids.push(id);
-  setWrongIds(ids);
+  setWrongIds([...getWrongIds(), id]);
 }
 
 function removeWrongId(id) {
-  const ids = getWrongIds().filter((item) => item !== id);
-  setWrongIds(ids);
+  setWrongIds(getWrongIds().filter((item) => item !== id));
 }
 
 function shuffle(array) {
@@ -87,8 +90,10 @@ function showPage(page) {
 }
 
 function updateHomeStats() {
-  totalCount.textContent = questions.length;
+  totalCount.textContent = questionBank.length;
   wrongCount.textContent = getWrongIds().length;
+  bankInfo.textContent = `手機可用｜${questionBank.length} 題｜圖片題｜隨機練習｜錯題本`;
+  versionText.textContent = `版本：${APP_VERSION}`;
 }
 
 function startQuiz(mode) {
@@ -97,25 +102,31 @@ function startQuiz(mode) {
   currentIndex = 0;
 
   if (mode === "all") {
-    currentQuestions = [...questions];
-    modeLabel.textContent = "全部題目";
+    currentQuestions = [...questionBank];
+    modeLabel.textContent = `全部題目（${currentQuestions.length} 題）`;
   }
 
   if (mode === "random") {
-    currentQuestions = shuffle(questions);
-    modeLabel.textContent = "隨機練習";
+    currentQuestions = shuffle(questionBank);
+    modeLabel.textContent = `隨機練習（${currentQuestions.length} 題）`;
   }
 
   if (mode === "wrong") {
     const wrongIds = getWrongIds();
-    currentQuestions = questions.filter((q) => wrongIds.includes(q.id));
-    modeLabel.textContent = "錯題練習";
+    currentQuestions = questionBank.filter((q) => wrongIds.includes(q.id));
+    modeLabel.textContent = `錯題練習（${currentQuestions.length} 題）`;
 
     if (currentQuestions.length === 0) {
       alert("目前沒有錯題。先刷全部題目，再回來練錯題。");
       showPage(homePage);
       return;
     }
+  }
+
+  if (currentQuestions.length === 0) {
+    alert("題庫沒有載入成功，請確認 questions.js 有上傳。 ");
+    showPage(homePage);
+    return;
   }
 
   showPage(quizPage);
@@ -144,6 +155,8 @@ function renderImage(image) {
 
 function renderQuestion() {
   const q = currentQuestions[currentIndex];
+  if (!q) return showResult();
+
   const selected = answers[q.id];
   const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
   const correctCount = Object.values(answers).filter((item) => item.correct).length;
@@ -158,7 +171,7 @@ function renderQuestion() {
 
   renderImage(q.image);
 
-  Object.entries(q.options).forEach(([key, value]) => {
+  Object.entries(q.options || {}).forEach(([key, value]) => {
     const button = document.createElement("button");
     button.className = "option-btn";
     button.textContent = `(${key}) ${value}`;
@@ -265,6 +278,6 @@ reviewWrongBtn.addEventListener("click", () => startQuiz("wrong"));
 restartBtn.addEventListener("click", () => startQuiz(currentMode));
 resultHomeBtn.addEventListener("click", () => showPage(homePage));
 
-answerStringText.textContent = answerString;
+answerStringText.textContent = typeof answerString === "string" ? answerString : "未提供答案串";
 updateHomeStats();
 showPage(homePage);

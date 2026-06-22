@@ -1,17 +1,20 @@
 :root {
-  --bg: #eef3f8;
-  --paper: #ffffff;
-  --text: #172033;
-  --muted: #687287;
-  --line: #d8dee8;
-  --primary: #2456d8;
-  --primary-dark: #183da5;
-  --danger: #c92a2a;
-  --ok-bg: #e9f7ef;
-  --ok-line: #2f9e44;
-  --bad-bg: #fff0f0;
-  --bad-line: #e03131;
-  --shadow: 0 18px 45px rgba(21, 31, 52, 0.12);
+  color-scheme: dark;
+  --bg: #080b12;
+  --paper: #111827;
+  --surface: #0f172a;
+  --surface-2: #1e293b;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --line: #334155;
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --danger: #fb7185;
+  --ok-bg: #052e1b;
+  --ok-line: #22c55e;
+  --bad-bg: #3b0a13;
+  --bad-line: #fb7185;
+  --shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -22,7 +25,10 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.14), transparent 32rem),
+    radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.08), transparent 26rem),
+    var(--bg);
   color: var(--text);
 }
 
@@ -37,11 +43,12 @@ button {
 }
 
 .page-card {
-  background: var(--paper);
+  background: rgba(17, 24, 39, 0.94);
   border: 1px solid var(--line);
   border-radius: 18px;
   box-shadow: var(--shadow);
   padding: 24px;
+  backdrop-filter: blur(10px);
 }
 
 .hidden {
@@ -50,7 +57,7 @@ button {
 
 .doc-title {
   text-align: center;
-  border-bottom: 2px solid var(--line);
+  border-bottom: 1px solid var(--line);
   padding-bottom: 18px;
   margin-bottom: 20px;
 }
@@ -68,8 +75,15 @@ button {
 }
 
 .doc-title span,
-.hint {
+.hint,
+.version-text {
   color: var(--muted);
+}
+
+.version-text {
+  margin: 14px 0 0;
+  font-size: 13px;
+  text-align: center;
 }
 
 .stats-grid {
@@ -84,12 +98,13 @@ button {
   border-radius: 14px;
   padding: 16px;
   text-align: center;
-  background: #f8fafc;
+  background: var(--surface);
 }
 
 .stats-grid strong {
   display: block;
-  font-size: 32px;
+  font-size: 34px;
+  color: #f8fafc;
 }
 
 .stats-grid span {
@@ -104,7 +119,7 @@ button {
 button {
   min-height: 48px;
   border: 1px solid var(--line);
-  background: #f8fafc;
+  background: var(--surface-2);
   color: var(--text);
   border-radius: 12px;
   cursor: pointer;
@@ -113,22 +128,22 @@ button {
 }
 
 button:hover {
-  filter: brightness(0.98);
+  border-color: #64748b;
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.58;
   cursor: not-allowed;
 }
 
 button.primary {
-  background: var(--primary);
+  background: var(--primary-dark);
   border-color: var(--primary);
-  color: white;
+  color: #ffffff;
 }
 
 button.primary:hover {
-  background: var(--primary-dark);
+  background: #2563eb;
 }
 
 button.ghost {
@@ -150,7 +165,7 @@ button.small {
   border: 1px dashed var(--primary);
   border-radius: 14px;
   padding: 14px;
-  background: #f1f5ff;
+  background: rgba(30, 41, 59, 0.75);
 }
 
 .answer-box span {
@@ -160,8 +175,11 @@ button.small {
 }
 
 .answer-box strong {
-  font-size: 22px;
-  letter-spacing: 0.08em;
+  display: block;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .topbar {
@@ -192,8 +210,9 @@ button.small {
 .progress-bar {
   height: 10px;
   border-radius: 999px;
-  background: #e5e9f0;
+  background: #1e293b;
   overflow: hidden;
+  border: 1px solid #334155;
 }
 
 #progressFill {
@@ -220,7 +239,7 @@ button.small {
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: white;
+  background: #f8fafc;
   padding: 10px;
 }
 
@@ -241,7 +260,7 @@ button.small {
   width: 100%;
   text-align: left;
   line-height: 1.45;
-  background: #ffffff;
+  background: #0f172a;
 }
 
 .option-btn.correct {
@@ -319,9 +338,4 @@ button.small {
   .image-box {
     padding: 6px;
   }
-}
-
-.answer-box strong {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
 }

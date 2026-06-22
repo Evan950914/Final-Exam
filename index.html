@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b12" />
   <title>期末刷題網站</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=dark189fix-20260623" />
 </head>
 <body>
   <main class="app">
@@ -12,7 +13,7 @@
       <div class="doc-title">
         <p>資料結構與演算法題庫</p>
         <h1>期末刷題網站</h1>
-        <span>手機可用｜189 題｜圖片題｜隨機練習｜錯題本</span>
+        <span id="bankInfo">手機可用｜載入中...</span>
       </div>
 
       <div class="stats-grid">
@@ -40,6 +41,7 @@
       </div>
 
       <p class="hint">考前策略：先刷全部題目，再把錯題練到連續答對。不要只背答案串。</p>
+      <p id="versionText" class="version-text"></p>
     </section>
 
     <section id="quizPage" class="page-card hidden">
@@ -60,9 +62,7 @@
 
       <article class="question-card">
         <h2 id="questionText"></h2>
-        <div id="imageBox" class="image-box hidden">
-          <img id="questionImage" alt="題目圖" />
-        </div>
+        <div id="imageBox" class="image-box hidden"></div>
         <div id="optionsBox" class="options"></div>
       </article>
 
@@ -92,7 +92,7 @@
     </section>
   </main>
 
-  <script src="questions.js"></script>
-  <script src="script.js"></script>
+  <script src="questions.js?v=dark189fix-20260623"></script>
+  <script src="script.js?v=dark189fix-20260623"></script>
 </body>
 </html>
