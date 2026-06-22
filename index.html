@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>期末刷題網站</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section id="homePage" class="card">
+      <h1>期末刷題網站</h1>
+      <p class="subtitle">手機可用｜隨機出題｜錯題本｜圖形題支援</p>
+
+      <div class="stats-grid">
+        <div>
+          <strong id="totalCount">0</strong>
+          <span>總題數</span>
+        </div>
+        <div>
+          <strong id="wrongCount">0</strong>
+          <span>錯題數</span>
+        </div>
+      </div>
+
+      <div class="menu">
+        <button id="startAllBtn" class="primary">全部題目</button>
+        <button id="startRandomBtn">隨機練習</button>
+        <button id="startWrongBtn">錯題練習</button>
+        <button id="clearWrongBtn" class="danger ghost">清空錯題本</button>
+      </div>
+
+      <p class="hint">建議考前先刷「全部題目」，再反覆刷「錯題練習」。</p>
+    </section>
+
+    <section id="quizPage" class="card hidden">
+      <div class="topbar">
+        <button id="backHomeBtn" class="small ghost">回首頁</button>
+        <span id="modeLabel">練習模式</span>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span id="questionProgress">第 1 / 1 題</span>
+          <span id="scoreText">答對 0 題</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progressFill"></div>
+        </div>
+      </div>
+
+      <article class="question-card">
+        <h2 id="questionText"></h2>
+        <div id="diagramBox" class="diagram-box hidden"></div>
+        <div id="imageBox" class="image-box hidden">
+          <img id="questionImage" alt="題目圖片" />
+        </div>
+        <div id="optionsBox" class="options"></div>
+      </article>
+
+      <section id="feedbackBox" class="feedback hidden">
+        <h3 id="feedbackTitle"></h3>
+        <p id="explanationText"></p>
+      </section>
+
+      <div class="actions">
+        <button id="prevBtn" class="ghost">上一題</button>
+        <button id="nextBtn" class="primary">下一題</button>
+      </div>
+    </section>
+
+    <section id="resultPage" class="card hidden">
+      <h1>練習完成</h1>
+      <div class="result-score">
+        <strong id="finalScore">0%</strong>
+        <span id="finalDetail">答對 0 / 0 題</span>
+      </div>
+      <div class="menu">
+        <button id="reviewWrongBtn" class="primary">練習錯題</button>
+        <button id="restartBtn">重新練習</button>
+        <button id="resultHomeBtn" class="ghost">回首頁</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
